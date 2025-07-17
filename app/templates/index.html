@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Guessing Game</title>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <h1>Word Guessing Game</h1>
+        <div class="counter">
+            <p>Attempts remaining: <span id="attempts">6</span></p>
+        </div>
+        <div class="input-container">
+            <input type="text" id="guessInput" maxlength="5" placeholder="Enter your guess">
+            <button id="submitGuess">Submit Guess</button>
+        </div>
+        <div id="feedbackContainer" class="feedback-container"></div>
+        
+        <div id="gameMessage" class="game-message"></div>
+    </div>
+
+    <!-- Dialog สำหรับแสดงผลเมื่อเกมจบหรือทายถูก -->
+    <div id="gameDialog" class="modal">
+        <div class="modal-content">
+            <span id="closeDialog" class="close">&times;</span>
+            <h2 id="dialogMessage"></h2>
+            <div id="dialogButtons">
+                <button id="restartGame">Start New Game</button>
+                <button id="closeDialogBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/script.js"></script>
+</body>
+
+</html>

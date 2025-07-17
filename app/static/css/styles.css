@@ -1,0 +1,239 @@
+/* รวมพื้นฐานที่ดี */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* การจัดตำแหน่งและการตั้งค่า */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+}
+
+/* สไตล์ที่ใช้กับ container หลักของเกม */
+.game-container {
+    background-color: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+/* เพิ่มสไตล์ให้กับข้อความหรือลายละเอียดต่าง ๆ */
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+}
+
+/* สไตล์ให้กับช่อง input และปุ่ม */
+/* .input-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+} */
+.input-container input[type="text"],
+.input-container button {
+    display: block;  /* ให้แต่ละตัวอยู่คนละบรรทัด */
+    width: 100%;      /* ให้ขยายเต็มความกว้างของ container */
+    margin-bottom: 15px;  /* เพิ่มระยะห่างระหว่าง input กับ button */
+    text-align: center;
+}
+
+input[type="text"] {
+    padding: 12px 20px;
+    width: 60%;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #5e72e4;
+    box-shadow: 0 0 8px rgba(94, 114, 228, 0.3);
+}
+
+button {
+    padding: 12px 20px;
+    background-color: #5e72e4;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #4a5bb0;
+}
+
+/* แสดงผลสีใน feedback */
+.feedback-container {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 20px;
+     text-transform: uppercase;
+}
+
+.letter {
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.letter:hover {
+    transform: scale(1.1);
+}
+
+.green {
+    background-color: #28a745;
+    color: white;
+}
+
+.yellow {
+    background-color: #ffc107;
+    color: black;
+}
+
+.black {
+    background-color: #343a40;
+    color: white;
+}
+
+/* สไตล์สำหรับข้อความผลลัพธ์ (เช่น เกมจบ) */
+.game-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.game-message.show {
+    opacity: 1;
+}
+
+/* Animation transition */
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+input[type="text"].error {
+    animation: shake 0.5s ease-in-out;
+}
+
+
+/* <------> */ 
+
+/* Modal overlay (background overlay ที่มืดๆ) */
+.modal {
+    display: none; /* ปกติจะไม่แสดง */
+    position: fixed;
+    z-index: 9999; /* ให้อยู่เหนือเนื้อหาทั้งหมด */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* สีดำโปร่งแสง */
+    overflow: auto; /* ถ้ามีเนื้อหาที่สูงเกินจะเลื่อน */
+    animation: fadeIn 0.3s ease-in-out; /* สร้างการเคลื่อนไหว */
+}
+
+/* การเคลื่อนไหวสำหรับ fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* กล่องของ Modal */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto; /* จัดให้อยู่กลางหน้าจอ */
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    animation: slideUp 0.5s ease-out;
+}
+
+/* การเคลื่อนไหวสำหรับ slide-up */
+@keyframes slideUp {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* การออกแบบปุ่มใน Dialog */
+#dialogButtons button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#dialogButtons button:hover {
+    background-color: #45a049;
+}
+
+/* ปุ่มปิด (X) */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Styling สำหรับข้อความใน Dialog */
+#dialogMessage {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* <----> */
