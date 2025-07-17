@@ -6,20 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Guessing Game</title>
     <link rel="stylesheet" href="../static/css/styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
     <div class="game-container">
         <h1>Word Guessing Game</h1>
         <div class="counter">
-            <p>Attempts remaining: <span id="attempts">6</span></p>
+            <p>Attempts remaining: <span id="attempts">5</span></p>
         </div>
         <div class="input-container">
             <input type="text" id="guessInput" maxlength="5" placeholder="Enter your guess">
             <button id="submitGuess">Submit Guess</button>
+            <button id="revealAnswer" class="btn btn-info btn-sm">Show Answer</button>
         </div>
-        <div id="feedbackContainer" class="feedback-container"></div>
-        
+        <div id="guessGrid" class="guess-grid">
+        </div>
         <div id="gameMessage" class="game-message"></div>
     </div>
 

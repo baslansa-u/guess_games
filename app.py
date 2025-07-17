@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, jsonify
-from app.models.game import get_random_word, check_guess  # แก้ไขการนำเข้าจาก models.game
+from flask import Flask, render_template, request, jsonify, session
+from app.models import game
+from app.models.game import get_random_word, check_guess, load_word_list
 
 app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
 
 # คำที่ใช้ในเกม
-answer = get_random_word()  # ใช้ฟังก์ชัน get_random_word เพื่อเลือกคำ
+load_word_list()
+
+answer = get_random_word()  
 
 # หน้าแรก
 @app.route('/')
@@ -26,6 +29,16 @@ def check_guess_route():
         return jsonify({'result': 'Congratulations! You guessed the word correctly!', 'feedback': feedback})
     else:
         return jsonify({'result': 'Try again!', 'feedback': feedback})
+
+@app.route('/get_answer', methods=['GET'])
+def get_answer():
+    return jsonify({'answer': answer.upper()})
+
+@app.route('/restart_game', methods=['POST'])
+def restart_game():
+    global answer
+    answer = get_random_word()
+    return jsonify({'message': 'Game restarted!', 'answer': answer.upper()})
 
 if __name__ == "__main__":
     app.run(debug=True)
