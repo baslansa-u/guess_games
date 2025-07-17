@@ -8,17 +8,14 @@ let restartGameButton = document.getElementById("restartGame");
 let closeDialogBtn = document.getElementById("closeDialogBtn");
 let guessHistory = [];
 
-// ฟังก์ชันสำหรับตรวจสอบคำที่ทาย
 function checkGuess() {
     const guess = document.getElementById("guessInput").value.toLowerCase();
 
-    // ตรวจสอบว่า length ของคำทายถูกต้องหรือไม่
     if (guess.length !== 5) {
         alert("Please enter exactly 5 letters.");
         return;
     }
 
-    // ส่งคำทายไปที่ Flask server
     fetch('/check_guess', {
         method: 'POST',
         headers: {
@@ -31,11 +28,9 @@ function checkGuess() {
             if (data.error) {
                 alert(data.error);
             } else {
-                // ปรับจำนวนครั้งที่เหลือ
                 attempts--;
                 document.getElementById("attempts").textContent = attempts;
 
-                // แสดงผลการทาย
                 let feedbackHtml = '';
                 data.feedback.forEach(item => {
                     feedbackHtml += `<div class="letter ${item.color}">${item.letter}</div>`;
@@ -48,28 +43,22 @@ function checkGuess() {
 
                 updateGuessHistory();
 
-                // แสดงข้อความเกม
                 if (data.result.includes("Congratulations")) {
-                    // แสดงข้อความแสดงความยินดี
                     dialogMessage.textContent = data.result;
-                    gameDialog.style.display = "block"; // แสดง dialog
+                    gameDialog.style.display = "block";
                 } else if (attempts === 0) {
-                    // แสดงข้อความเมื่อหมดโอกาสทาย
                     dialogMessage.textContent = "Game Over! You've run out of attempts.";
-                    gameDialog.style.display = "block"; // แสดง dialog
+                    gameDialog.style.display = "block";
                 }
 
-                // ล้างฟิลด์ input
                 document.getElementById("guessInput").value = '';
             }
         })
         .catch(error => console.error('Error:', error));
 }
 
-// เพิ่ม event listener ให้กับปุ่ม
 document.getElementById("submitGuess").addEventListener("click", checkGuess);
 
-// Add after the submitGuess event listener
 document.getElementById("revealAnswer").addEventListener("click", function () {
     fetch('/get_answer', {
         method: 'GET',
@@ -82,12 +71,10 @@ document.getElementById("revealAnswer").addEventListener("click", function () {
         .catch(error => console.error('Error:', error));
 });
 
-// เคลียร์ข้อความผลลัพธ์ทุกครั้งที่ผู้ใช้กรอกใหม่
 document.getElementById("guessInput").addEventListener("input", function () {
     gameMessage.classList.remove("show");
 });
 
-// ฟังก์ชันสำหรับรีสตาร์ทเกม
 restartGameButton.addEventListener("click", function () {
     fetch('/restart_game', {
         method: 'POST',
@@ -100,17 +87,16 @@ restartGameButton.addEventListener("click", function () {
                 guessHistory = [];
                 document.getElementById("attempts").textContent = attempts;
                 initializeGuessGrid();
-                gameDialog.style.display = "none"; // ซ่อน dialog
+                gameDialog.style.display = "none";
             } else {
-                gameDialog.style.display = "none"; // ซ่อน dialog
+                gameDialog.style.display = "none";
             }
         })
         .catch(error => console.error('Error:', error));
 });
 
-// ฟังก์ชันปิด dialog
 closeDialogBtn.addEventListener("click", function () {
-    gameDialog.style.display = "none";  // ซ่อน dialog
+    gameDialog.style.display = "none";
 });
 
 function updateGuessHistory() {
@@ -125,7 +111,6 @@ function updateGuessHistory() {
     });
 }
 
-// Add after the variable declarations
 function initializeGuessGrid() {
     const guessGrid = document.getElementById("guessGrid");
     let gridHtml = '';

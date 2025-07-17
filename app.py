@@ -4,17 +4,14 @@ from app.models.game import get_random_word, check_guess, load_word_list
 
 app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
 
-# คำที่ใช้ในเกม
 load_word_list()
 
 answer = get_random_word()  
 
-# หน้าแรก
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# API สำหรับตรวจสอบคำทาย
 @app.route('/check_guess', methods=['POST'])
 def check_guess_route():
     guess = request.json.get('guess', '').lower()
@@ -22,7 +19,6 @@ def check_guess_route():
     if len(guess) != 5:
         return jsonify({'error': 'Please enter exactly 5 letters.'}), 400
 
-    # ใช้ฟังก์ชัน check_guess จาก game.py
     feedback = check_guess(guess, answer)
 
     if guess == answer:
